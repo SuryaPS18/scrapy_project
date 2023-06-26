@@ -15,7 +15,7 @@ class Bayut_spiderSpider(scrapy.Spider):
                 'url' : apartment.css('._4041eb80 a').attrib['href'],
             }
 
-        next_page = response.css('._92c36ba1 a ::attr(href)').get()
+        next_page = response.css('[title="Next"] ::attr(href)').get()
 
         if next_page is not None:
             next_page_url = 'https://www.bayut.com' + next_page
