@@ -1,4 +1,5 @@
 import scrapy
+from bayut_scraper.items import BayutItem
 
 
 
@@ -26,44 +27,32 @@ class Bayut_spiderSpider(scrapy.Spider):
     
 
     def parse_property_page(self ,response):
+        bayut_item=BayutItem()
 
-        yield {
-            'property_id' : response.css('._033281ab  [aria-label="Reference"]::text').get(),
-            'purpose' : response.css('._033281ab  [aria-label="Purpose"]::text').get(),
-            'type' : response.css('._033281ab  [aria-label="Type"]::text').get(),
-            'added_on' : response.css('._033281ab  [aria-label="Reactivated date"]::text').get(),
-            'furnishing' : response.css('._033281ab  [aria-label="Furnishing"]::text').get(),
-            'price' : {
-                'currency' : response.css('.c4fc20ba .e63a6bfb::text').get(),
-                'amount' : response.css('.c4fc20ba ._105b8a67::text').get(),
-            },
-            'location' : response.css('._1f0f1758 ::text').get(),
-            'bed_bath_size' : {
-                'bedrooms' : response.css('[aria-label="Beds"] .fc2d1086::text').get(),
-                'bathrooms' : response.css('[aria-label="Baths"] .fc2d1086::text').get(),
-                'size' : response.css('.fc2d1086 span::text').get(),
-            },
-            'agent_name' : response.css('._63b62ff2 .f730f8e6::text').get(),
-            'img_url' : response.css('[aria-label="Property image"] .bea951ad').attrib['src'],
-            'description' : response.css('._96aa05ec ._2a806e1e ::text').getall(),
+        
+           
+        bayut_item['property_id'] = response.css('._033281ab  [aria-label="Reference"]::text').get(),
+        bayut_item['purpose'] = response.css('._033281ab  [aria-label="Purpose"]::text').get(),
+        bayut_item['type'] = response.css('._033281ab  [aria-label="Type"]::text').get(),
+        bayut_item['added_on']= response.css('._033281ab  [aria-label="Reactivated date"]::text').get(),
+        bayut_item['furnishing']=  response.css('._033281ab  [aria-label="Furnishing"]::text').get(),
+        bayut_item['price']=  {
+            'currency' : response.css('.c4fc20ba .e63a6bfb::text').get(),
+            'amount' : response.css('.c4fc20ba ._105b8a67::text').get(),
+        },
+        bayut_item['location' ]=  response.css('._1f0f1758 ::text').get(),
+        bayut_item['bed_bath_size']=  {
+            'bedrooms' : response.css('[aria-label="Beds"] .fc2d1086::text').get(),
+            'bathrooms' : response.css('[aria-label="Baths"] .fc2d1086::text').get(),
+            'size' : response.css('.fc2d1086 span::text').get(),
+        },
+        bayut_item['agent_name' ]=  response.css('._63b62ff2 .f730f8e6::text').get(),
+        bayut_item['img_url' ]=  response.css('[aria-label="Property image"] .bea951ad').attrib['src'],
+        bayut_item['description' ]=  response.css('._96aa05ec ._2a806e1e ::text').getall(),
 
 
-        }
+        
+        yield bayut_item
             
         
 
-# reference=response.css('._033281ab  [aria-label="Reference"]::text').get()
-# purpose=response.css('._033281ab  [aria-label="Purpose"]::text').get()
-# type=response.css('._033281ab  [aria-label="Type"]::text').get()
-# date=response.css('._033281ab  [aria-label="Reactivated date"]::text').get()
-# furnishing=response.css('._033281ab  [aria-label="Furnishing"]::text').get()
-# currency=response.css('.c4fc20ba .e63a6bfb::text').get()
-# price=response.css('.c4fc20ba ._105b8a67::text').get()
-# bed=response.css('[aria-label="Beds"] .fc2d1086::text').get()
-# bathroom=response.css('[aria-label="Baths"] .fc2d1086::text').get()
-# size=response.css('.fc2d1086 span::text').get()
-# agent nm=response.css('._63b62ff2 .f730f8e6::text').get()
-# location=response.css('._1f0f1758 ::text').get()
-# breadcrambs=response.css('[title="Villas for Rent in Dubai"] ._327a3afc ::text').get()>response.css('[title="Villas for Rent in The Springs"] ._327a3afc ::text').get()>response.css('[title="Villas for Rent in The Springs 7"] ._327a3afc ::text').get()
-# description= response.css('._96aa05ec ._2a806e1e ::text').getall()
-# img_url=response.css('[aria-label="Property image"] .bea951ad').attrib['src']

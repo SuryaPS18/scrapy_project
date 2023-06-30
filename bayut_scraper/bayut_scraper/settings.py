@@ -12,6 +12,10 @@ BOT_NAME = "bayut_scraper"
 SPIDER_MODULES = ["bayut_scraper.spiders"]
 NEWSPIDER_MODULE = "bayut_scraper.spiders"
 
+# FEEDS ={
+#     'mydatas.json' : {'format' : 'json'},
+# }
+
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = "bayut_scraper (+http://www.yourdomain.com)"
@@ -62,9 +66,12 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    "bayut_scraper.pipelines.BayutScraperPipeline": 300,
-#}
+ITEM_PIPELINES = {
+   "bayut_scraper.pipelines.BayutScraperPipeline": 300,
+   "bayut_scraper.pipelines.MySQLPipeline": 400,
+   
+
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
